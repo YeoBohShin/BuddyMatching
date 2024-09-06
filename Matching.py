@@ -115,8 +115,8 @@ buddies = []
 
 # Input the column names as per the CSV file
 # For questions that allow multiple answers, split the answers by ';', ensure
-# when creating the exchange/buddy object, input as (answers[:-1]),
-# where answers is the name of the variable of question that allows multiple answers
+# when creating the exchanger/buddy object, input as (answers[:-1]),
+# where "answers" is the name of the variable of question that allows multiple answers
 for _, data in exchangers_data.iterrows():
     name = data['Full Name in English (as on your Passport):']
     nEmail = data['NUS email address (exxxxxxx@u.nus.edu):']
