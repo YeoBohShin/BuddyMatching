@@ -1,6 +1,11 @@
 import pandas as pd
 import random
 
+# Variable
+max_num_of_exchangers_per_buddy = 2
+# Number from 1 to 10, representing the odds of a buddy has the maximum number of exchangers
+percentage_of_buddies_with_max_exchangers = 2
+
 # Insert excel columns as per the exchanger excel file here
 exchanger_name = 'Full Name in English (as on your Passport):'
 exchanger_nEmail = 'NUS email address (exxxxxxx@u.nus.edu):'
@@ -110,27 +115,27 @@ class Buddy:
         self.interest = interest
         self.comment = comment
         self.odds = random.randint(0, 9)
-        self.buddies = []
+        self.exchangers = []
 
     # Check if the buddy has reached the limit of exchangers
-    # Adjust the limit accordingly, 1 means buddy can have up to 2 exchangers
-    # 2 means buddy can have up to 3 exchangers and so on
     def is_full(self):
-        # Change the number below to adjust the odds up to 9.
-        if self.odds < 8:
-            # 80% of buddies have 2 or less exchanger
-            return len(self.buddies) > 1
+        if self.odds < 10 - percentage_of_buddies_with_max_exchangers + 1:
+            if max_num_of_exchangers_per_buddy == 1:
+                return len(self.exchangers) > 0
+            elif max_num_of_exchangers_per_buddy == 2:
+                return len(self.exchangers) > 1
+            else:
+                return len(self.exchangers) > max_num_of_exchangers_per_buddy - 2
         else:
-            # 20% of buddies have 3 exchanger
-            return len(self.buddies) > 2
+            return len(self.exchangers) > max_num_of_exchangers_per_buddy - 1
 
     def has_exchanger(self):
-        return len(self.buddies) > 0
+        return len(self.exchangers) > 0
 
     def add_exchanger(self, exchanger):
         if self.is_full():
             return False
-        self.buddies.append(exchanger)
+        self.exchangers.append(exchanger)
         return True
 
 
@@ -184,6 +189,14 @@ for _, data in buddies_data.iterrows():
                   gender, match_gender, interest[:-1], comment)
     buddies.append(buddy)
 
+if len(exchangers) > len(buddies) * max_num_of_exchangers_per_buddy:
+    print("There are not enough buddies for the exchangers\n")
+    print("Number of exchangers: ", len(exchangers))
+    print("Number of buddies: ", len(buddies))
+    print("Number of exchangers per buddy: ", max_num_of_exchangers_per_buddy)
+    print("Ensure that the number of buddy * number of exchangers per buddy is greater than the number of exchangers")
+    exit()
+
 # Matching algorithm
 # The alogrithm greedily assigns exchanger to buddies with the highest matching score
 # Tldr: First come first serve
@@ -227,25 +240,25 @@ matchings_data = pd.DataFrame(
              buddy_match_gender,
              buddy_interest,
              buddy_comment,
-             exchanger_name,
-             exchanger_nEmail,
-             exchanger_pEmail,
-             exchanger_telehandle,
-             exchanger_hCountry,
-             exchanger_hUniversity,
-             exchanger_major,
-             exchanger_faculty,
-             exchanger_year,
-             exchanger_match_faculty,
-             exchanger_gender,
-             exchanger_match_gender,
-             exchanger_interest,
-             exchanger_comment])
+             exchanger_name + ' ',
+             exchanger_nEmail + ' ',
+             exchanger_pEmail + ' ',
+             exchanger_telehandle + ' ',
+             exchanger_hCountry + ' ',
+             exchanger_hUniversity + ' ',
+             exchanger_major + ' ',
+             exchanger_faculty + ' ',
+             exchanger_year + ' ',
+             exchanger_match_faculty + ' ',
+             exchanger_gender + ' ',
+             exchanger_match_gender + ' ',
+             exchanger_interest + ' ',
+             exchanger_comment + ' '])
 
 # Put the necessary information from the buddies and exchangers into the matchings_data
 # Ensure that the column names are the same as the ones above
 for buddy in matchings:
-    for exchanger in buddy.buddies:
+    for exchanger in buddy.exchangers:
         matchings_data = matchings_data._append(
             {buddy_name: buddy.name,
              buddy_nEmail: buddy.nEmail,
@@ -259,20 +272,20 @@ for buddy in matchings:
              buddy_match_gender: 'Yes' if buddy.match_gender else 'No preference',
              buddy_interest: ';'.join(buddy.interest),
              buddy_comment: buddy.comment,
-             exchanger_name: exchanger.name,
-             exchanger_nEmail: exchanger.nEmail,
-             exchanger_pEmail: exchanger.pEmail,
-             exchanger_telehandle: exchanger.telehandle,
-             exchanger_hCountry: exchanger.hCountry,
-             exchanger_hUniversity: exchanger.hUniversity,
-             exchanger_major: exchanger.major,
-             exchanger_faculty: ';'.join(exchanger.faculty),
-             exchanger_year: exchanger.year,
-             exchanger_match_faculty: 'Yes' if exchanger.match_faculty else 'No preference',
-             exchanger_gender: exchanger.gender,
-             exchanger_match_gender: 'Yes' if exchanger.match_gender else 'No preference',
-             exchanger_interest: ';'.join(exchanger.interest),
-             exchanger_comment: exchanger.comment},
+             exchanger_name + ' ': exchanger.name,
+             exchanger_nEmail + ' ': exchanger.nEmail,
+             exchanger_pEmail + ' ': exchanger.pEmail,
+             exchanger_telehandle + ' ': exchanger.telehandle,
+             exchanger_hCountry + ' ': exchanger.hCountry,
+             exchanger_hUniversity + ' ': exchanger.hUniversity,
+             exchanger_major + ' ': exchanger.major,
+             exchanger_faculty + ' ': ';'.join(exchanger.faculty),
+             exchanger_year + ' ': exchanger.year,
+             exchanger_match_faculty + ' ': 'Yes' if exchanger.match_faculty else 'No preference',
+             exchanger_gender + ' ': exchanger.gender,
+             exchanger_match_gender + ' ': 'Yes' if exchanger.match_gender else 'No preference',
+             exchanger_interest + ' ': ';'.join(exchanger.interest),
+             exchanger_comment + ' ': exchanger.comment},
             ignore_index=True)
 
 
