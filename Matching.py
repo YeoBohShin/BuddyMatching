@@ -2,7 +2,7 @@ import pandas as pd
 import random
 
 # Variable
-max_num_of_exchangers_per_buddy = 2
+max_num_of_exchangers_per_buddy = 3
 # Number from 1 to 10, representing the odds of a buddy has the maximum number of exchangers
 percentage_of_buddies_with_max_exchangers = 2
 
