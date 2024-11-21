@@ -1,6 +1,36 @@
 import pandas as pd
 import random
 
+# Insert excel columns as per the exchanger excel file here
+exchanger_name = 'Full Name in English (as on your Passport):'
+exchanger_nEmail = 'NUS email address (exxxxxxx@u.nus.edu):'
+exchanger_pEmail = 'Personal email address:'
+exchanger_telehandle = 'Telegram Handle (do not include the @):'
+exchanger_hCountry = 'Home Country:'
+exchanger_hUniversity = 'Home University (in English):'
+exchanger_major = 'Major of study (if any):'
+exchanger_faculty = 'Faculty of study at NUS:'
+exchanger_year = 'Year of study at home university (as of Aug 2024)'
+exchanger_match_faculty = 'Would you want to be matched with a buddy from the same faculty?'
+exchanger_interest = 'Share with us your interests! (Top 3)'
+exchanger_gender = 'Gender:'
+exchanger_match_gender = 'Would you want to be matched with a buddy of the same gender?'
+exchanger_comment = '(Optional) If you have any other comments or preferences regarding the matching, please let us know below!'
+
+# Insert excel columns as per the buddy excel file here
+buddy_name = 'Full Name (as on your student card):'
+buddy_nEmail = 'NUS email address (exxxxxxx@u.nus.edu):'
+buddy_pEmail = 'Personal email address:'
+buddy_telehandle = 'Telegram Handle (do not include the @):'
+buddy_major = 'Major:'
+buddy_year = 'Year and semester of study (as of AY24/25 Sem 1):'
+buddy_faculty = 'Faculty:'
+buddy_match_faculty = 'Would you like to be matched with exchangers from the same faculty?'
+buddy_gender = 'Gender:'
+buddy_match_gender = 'Would you like to be matched with exchanger of the same gender? (If applicable)'
+buddy_interest = 'Share with us your interests! (Top 3)'
+buddy_comment = '(Optional) If you have any other comments or preferences regarding the matching, please let us know below!'
+
 # This code block is to encapsulate the information of an exchanger
 
 
@@ -118,39 +148,38 @@ buddies = []
 # when creating the exchanger/buddy object, input as (answers[:-1]),
 # where "answers" is the name of the variable of question that allows multiple answers
 for _, data in exchangers_data.iterrows():
-    name = data['Full Name in English (as on your Passport):']
-    nEmail = data['NUS email address (exxxxxxx@u.nus.edu):']
-    pEmail = data['Personal email address:']
-    telehandle = data['Telegram Handle (do not include the @):']
-    hCountry = data['Home Country:']
-    hUniversity = data['Home University (in English):']
-    major = data['Major of study (if any):']
-    faculty = data['Faculty of study at NUS:'].split(';')
-    year = data['Year of study at home university (as of Aug 2024)']
-    match_faculty = data['Would you want to be matched with a buddy from the same faculty?'] == 'Yes'
-    interest = data['Share with us your interests! (Top 3)'].split(';')
-    gender = data['Gender:']
-    match_gender = data['Would you want to be matched with a buddy of the same gender?'] == 'Yes'
-    comment = data['(Optional) If you have any other comments or preferences regarding the matching, please let us know below!']
+    name = data[exchanger_name]
+    nEmail = data[exchanger_nEmail]
+    pEmail = data[exchanger_pEmail]
+    telehandle = data[exchanger_telehandle]
+    hCountry = data[exchanger_hCountry]
+    hUniversity = data[exchanger_hUniversity]
+    major = data[exchanger_major]
+    year = data[exchanger_year]
+    faculty = data[exchanger_faculty].split(';')
+    match_faculty = data[exchanger_match_faculty] == 'Yes'
+    gender = data[exchanger_gender]
+    match_gender = data[exchanger_match_gender]
+    interest = data[exchanger_interest].split(';')
+    comment = data[exchanger_comment]
     exchanger = Exchanger(name, nEmail, pEmail, telehandle, hCountry, hUniversity,
                           major, year, faculty[:-1], match_faculty, gender, match_gender, interest[:-1], comment)
     exchangers.append(exchanger)
 
 # Same logic as above
 for _, data in buddies_data.iterrows():
-    name = data['Full Name (as on your student card):']
-    nEmail = data['NUS email address (exxxxxxx@u.nus.edu):']
-    pEmail = data['Personal email address:']
-    telehandle = data['Telegram Handle (do not include the @):']
-    major = data['Major:']
-    year = data['Year and semester of study (as of AY24/25 Sem 1):']
-    faculty = data['Faculty:'].split(';')
-    match_faculty = data['Would you like to be matched with exchangers from the same faculty?'] == 'Yes'
-    gender = data['Gender:']
-    match_gender = data[
-        'Would you like to be matched with exchanger of the same gender? (If applicable)'] == 'Yes'
-    interest = data['Share with us your interests! (Top 3)'].split(';')
-    comment = data['(Optional) If you have any other comments or preferences regarding the matching, please let us know below!']
+    name = data[buddy_name]
+    nEmail = data[buddy_nEmail]
+    pEmail = data[buddy_pEmail]
+    telehandle = data[buddy_telehandle]
+    major = data[buddy_major]
+    year = data[buddy_year]
+    faculty = data[buddy_faculty].split(';')
+    match_faculty = data[buddy_match_faculty] == 'Yes'
+    gender = data[buddy_gender]
+    match_gender = data[buddy_match_gender]
+    interest = data[buddy_interest].split(';')
+    comment = data[buddy_comment]
     buddy = Buddy(name, nEmail, pEmail, telehandle, major, year, faculty[:-1], match_faculty,
                   gender, match_gender, interest[:-1], comment)
     buddies.append(buddy)
@@ -186,64 +215,64 @@ if buddies:
 # Name of each column in the resulting matchings.csv file
 # Ensure that each column name is unique
 matchings_data = pd.DataFrame(
-    columns=['Full Name (as on your student card):',
-             'NUS email address(exxxxxxx@u.nus.edu): ',
-             'Personal email address:',
-             'Telegram Handle(do not include the @):',
-             'Major:',
-             'Year of study(as of AY23 / 24):',
-             'Faculty:',
-             'Would you prefer to be matched with exchanger from the same faculty?',
-             'I am a:',
-             'Would you prefer to be matched with exchanger from the same gender? (If applicable)',
-             'Please share with us your interests. (Top 3!)',
-             '(Optional) If you have any other comments or preferences regarding the matching, please let us know below!',
-             'Full Name in English (as on your Passport):',
-             'NUS email address:',
-             'Personal email addres:',
-             'Telegram Handle:',
-             'Home Country:',
-             'Home University (in English):',
-             'Major of study (if any):',
-             'Faculty of study at NUS:',
-             'Year of study at home university (as of Aug 2023)',
-             'Would you want to be matched with a buddy from the same faculty?',
-             'I am:',
-             'Would you want to be matched with a buddy of the same gender? ',
-             'Please share with us your interests (Top 3!)',
-             '(Optional) If you have any other comment or preferences regarding the matching, please let us know below!'])
+    columns=[buddy_name,
+             buddy_nEmail,
+             buddy_pEmail,
+             buddy_telehandle,
+             buddy_major,
+             buddy_year,
+             buddy_faculty,
+             buddy_match_faculty,
+             buddy_gender,
+             buddy_match_gender,
+             buddy_interest,
+             buddy_comment,
+             exchanger_name,
+             exchanger_nEmail,
+             exchanger_pEmail,
+             exchanger_telehandle,
+             exchanger_hCountry,
+             exchanger_hUniversity,
+             exchanger_major,
+             exchanger_faculty,
+             exchanger_year,
+             exchanger_match_faculty,
+             exchanger_gender,
+             exchanger_match_gender,
+             exchanger_interest,
+             exchanger_comment])
 
 # Put the necessary information from the buddies and exchangers into the matchings_data
 # Ensure that the column names are the same as the ones above
 for buddy in matchings:
     for exchanger in buddy.buddies:
         matchings_data = matchings_data._append(
-            {'Full Name (as on your student card):': buddy.name,
-             'NUS email address(exxxxxxx@u.nus.edu): ': buddy.nEmail,
-             'Personal email address:': buddy.pEmail,
-             'Telegram Handle(do not include the @):': buddy.tele,
-             'Major:': buddy.major,
-             'Year of study(as of AY23 / 24):': buddy.year,
-                'Faculty:': ';'.join(buddy.faculty),
-                'Would you prefer to be matched with exchanger from the same faculty?': 'Yes' if buddy.match_faculty else 'No preference',
-                'I am a:': buddy.gender,
-                'Would you prefer to be matched with exchanger from the same gender? (If applicable)': 'Yes' if buddy.match_gender else 'No preference',
-                'Please share with us your interests. (Top 3!)': ';'.join(buddy.interest),
-                '(Optional) If you have any other comments or preferences regarding the matching, please let us know below!': buddy.comment,
-                'Full Name in English (as on your Passport):': exchanger.name,
-                'NUS email address:': exchanger.nEmail,
-                'Personal email addres:': exchanger.pEmail,
-                'Telegram Handle:': exchanger.telehandle,
-                'Home Country:': exchanger.hCountry,
-                'Home University (in English):': exchanger.hUniversity,
-                'Major of study (if any):': exchanger.major,
-                'Faculty of study at NUS:': ';'.join(exchanger.faculty),
-                'Year of study at home university (as of Aug 2023)': exchanger.year,
-                'Would you want to be matched with a buddy from the same faculty?': 'Yes' if exchanger.match_faculty else 'No preference',
-                'I am:': exchanger.gender,
-                'Would you want to be matched with a buddy of the same gender? ': 'Yes' if exchanger.match_gender else 'No preference',
-                'Please share with us your interests (Top 3!)': ';'.join(exchanger.interest),
-             '(Optional) If you have any other comment or preferences regarding the matching, please let us know below!': exchanger.comment},
+            {buddy_name: buddy.name,
+             buddy_nEmail: buddy.nEmail,
+             buddy_pEmail: buddy.pEmail,
+             buddy_telehandle: buddy.tele,
+             buddy_major: buddy.major,
+             buddy_year: buddy.year,
+             buddy_faculty: ';'.join(buddy.faculty),
+             buddy_match_faculty: 'Yes' if buddy.match_faculty else 'No preference',
+             buddy_gender: buddy.gender,
+             buddy_match_gender: 'Yes' if buddy.match_gender else 'No preference',
+             buddy_interest: ';'.join(buddy.interest),
+             buddy_comment: buddy.comment,
+             exchanger_name: exchanger.name,
+             exchanger_nEmail: exchanger.nEmail,
+             exchanger_pEmail: exchanger.pEmail,
+             exchanger_telehandle: exchanger.telehandle,
+             exchanger_hCountry: exchanger.hCountry,
+             exchanger_hUniversity: exchanger.hUniversity,
+             exchanger_major: exchanger.major,
+             exchanger_faculty: ';'.join(exchanger.faculty),
+             exchanger_year: exchanger.year,
+             exchanger_match_faculty: 'Yes' if exchanger.match_faculty else 'No preference',
+             exchanger_gender: exchanger.gender,
+             exchanger_match_gender: 'Yes' if exchanger.match_gender else 'No preference',
+             exchanger_interest: ';'.join(exchanger.interest),
+             exchanger_comment: exchanger.comment},
             ignore_index=True)
 
 
