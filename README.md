@@ -1,13 +1,19 @@
 Simple code to match NUS buddies with Exchangers
 
+Before you can run the code, you will need to download an Integrated Development Environment(IDE), its basically an application that allows you to write and run code. A good IDE to download will be Visual Studio Code(VSCode), if you do not have VSCode, you can download it [here](https://code.visualstudio.com/download).
+
 Ensure that you install the necessary coding language and libraries needed to run the code.
 
-First, ensure that python3 is installed on your computer. If you do not have python3, download it from [here](https://www.python.org/downloads/)
+First, ensure that python3 is installed on your computer. If you do not have python3, download it from [here](https://www.python.org/downloads/).
 
-Once python3 is downloaded, use the command _pip install pandas_.
+Open up VSCode and open the Matching.py file.
 
-Ensure that both excel files are stored in the same directory as this code file.
-Ensure that both excel files are save in the .csv format for the code to work.
+If you do not have the _pandas_ library, run the command **pip install pandas** in the terminal.
+
+Now that the set-up is done, we can proceed to run the code.
+
+Ensure that both, exchanger and buddies, excel files are stored in the same directory as this code file.
+Ensure that both, exchanger and buddies, excel files are saved as .csv format for the code to work.
 
 Before running the code, ensure that data pre-processing is done for optimal results.
 
