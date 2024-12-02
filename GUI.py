@@ -84,27 +84,32 @@ def add_preference_label(data, frame):
     faculty = tk.Label(frame, text="Faculty: ")
     faculty.grid(row=1, column=0, sticky=tk.W)
     faculty_entry = tk.Entry(frame, width=40)
-    faculty_entry.insert(0, data[0])
+    if len(data) > 0:
+        faculty_entry.insert(0, data[0])
     faculty_entry.grid(row=1, column=0, sticky=tk.W, padx=180)
     match_faculty = tk.Label(frame, text="Match Faculty Preference: ")
     match_faculty.grid(row=2, column=0, sticky=tk.W)
     match_faculty_entry = tk.Entry(frame, width=40)
-    match_faculty_entry.insert(0, data[1])
+    if len(data) > 1:
+        match_faculty_entry.insert(0, data[1])
     match_faculty_entry.grid(row=2, column=0, sticky=tk.W, padx=180)
     gender = tk.Label(frame, text="Gender: ")
     gender.grid(row=3, column=0, sticky=tk.W)
     gender_entry = tk.Entry(frame, width=40)
-    gender_entry.insert(0, data[2])
+    if len(data) > 2:
+        gender_entry.insert(0, data[2])
     gender_entry.grid(row=3, column=0, sticky=tk.W, padx=180)
     match_gender = tk.Label(frame, text="Match Gender Preference: ")
     match_gender.grid(row=4, column=0, sticky=tk.W)
     match_gender_entry = tk.Entry(frame, width=40)
-    match_gender_entry.insert(0, data[3])
+    if len(data) > 4:
+        match_gender_entry.insert(0, data[3])
     match_gender_entry.grid(row=4, column=0, sticky=tk.W, padx=180)
     interests = tk.Label(frame, text="Interests: ")
     interests.grid(row=5, column=0, sticky=tk.W)
     interests_entry = tk.Entry(frame, width=40)
-    interests_entry.insert(0, data[4])
+    if len(data) > 4:
+        interests_entry.insert(0, data[4])
     interests_entry.grid(row=5, column=0, sticky=tk.W, padx=180)
 
 
@@ -270,7 +275,7 @@ def load():
             add_preference_label(buddy_preference, buddy_preference_frame)
 
     except FileNotFoundError:
-        with open(file_path, "w") as data_file:
+        with open(os.path.join(file_path, "data.txt"), "w") as data_file:
             pass
         load()
 
