@@ -177,17 +177,17 @@ def save():
         if isinstance(widget, tk.Frame):
             for entry in widget.winfo_children():
                 if isinstance(entry, tk.Entry):
-                    if widget.winfo_children()[0].cget("text") == "Matching Preferences: ":
+                    if widget.winfo_children()[0].cget("text") == "Matching Preferences: " and entry.get() != "":
                         matching_preferences.append(entry.get())
-                    elif widget.winfo_children()[0].cget("text") == "Input the Name of Files Below: ":
+                    elif widget.winfo_children()[0].cget("text") == "Input the Name of Files Below: " and entry.get() != "":
                         file_name_data.append(entry.get())
-                    elif widget.winfo_children()[0].cget("text") == "Input the Name of Columns from the Exchanger Excel You Want to Appear in the Output File Below: ":
+                    elif widget.winfo_children()[0].cget("text") == "Input the Name of Columns from the Exchanger Excel You Want to Appear in the Output File Below: " and entry.get() != "":
                         exchanger_data.append(entry.get())
-                    elif widget.winfo_children()[0].cget("text") == "Input the Name of Corresponding Compulsory Columns from Exchangers Excel Below: ":
+                    elif widget.winfo_children()[0].cget("text") == "Input the Name of Corresponding Compulsory Columns from Exchangers Excel Below: " and entry.get() != "":
                         exchanger_preference.append(entry.get())
-                    elif widget.winfo_children()[0].cget("text") == "Input the Name of Columns from the Buddy Excel You Want to Appear in the Output File Below: ":
+                    elif widget.winfo_children()[0].cget("text") == "Input the Name of Columns from the Buddy Excel You Want to Appear in the Output File Below: " and entry.get() != "":
                         buddy_data.append(entry.get())
-                    elif widget.winfo_children()[0].cget("text") == "Input the Name of Corresponding Compulsory Columns from Buddies Excel Below: ":
+                    elif widget.winfo_children()[0].cget("text") == "Input the Name of Corresponding Compulsory Columns from Buddies Excel Below: " and entry.get() != "":
                         buddy_preference.append(entry.get())
 
     with open(file_path, "w") as data_file:
@@ -214,18 +214,20 @@ def save():
         file_name_data[i] = os.path.join(executable_dir, file_name_data[i])
 
     try:
-        matching_preferences[0] = int(matching_preferences[0])
-        matching_preferences[1] = float(matching_preferences[1])
+        if len(matching_preferences) > 0:
+            matching_preferences[0] = int(matching_preferences[0])
+        if len(matching_preferences) > 1:
+            matching_preferences[1] = float(matching_preferences[1])
     except ValueError:
         temp_label = tk.Label(
             button_frame, text="Please ensure that inputs for matching preferences are numbers")
-        temp_label.grid(row=0, column=2)
+        temp_label.grid(row=1, column=1)
 
         temp_label.after(4000, temp_label.destroy)
         return
 
     temp_label = tk.Label(button_frame, text="Data saved successfully!")
-    temp_label.grid(row=0, column=2)
+    temp_label.grid(row=1, column=1)
 
     temp_label.after(4000, temp_label.destroy)
 
@@ -346,20 +348,21 @@ def start_match():
 
         temp = tk.Label(button_frame,
                         text="Matching Successful! Please check the output file")
-        temp.grid(row=1, column=2)
+        temp.grid(row=2, column=1)
 
         temp.after(4000, temp.destroy)
     except Exception as e:
         temp = tk.Label(button_frame,
                         text=e)
-        temp.grid(row=1, column=2)
+        temp.grid(row=2, column=1)
 
         temp.after(4000, temp.destroy)
 
 
-button_frame.pack(side=tk.TOP, anchor=tk.W, padx=150, pady=10)
-tk.Label(button_frame, text="Ensure that you have Saved before starting the Match").grid(
-    row=0, column=0)
+tk.Label(scrollable_frame, text="Ensure that you have Saved before starting the Match").pack(
+    side=tk.TOP, anchor=tk.W, padx=10)
+
+button_frame.pack(side=tk.TOP, anchor=tk.W, padx=10)
 tk.Button(button_frame, text="Save", command=save).grid(row=1, column=0)
 tk.Button(button_frame, text="Match",
           command=start_match).grid(row=2, column=0)
