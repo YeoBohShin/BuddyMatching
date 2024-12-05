@@ -1,20 +1,23 @@
 import pandas as pd
 import random
-
-# Variable
-max_num_of_exchangers_per_buddy = 3
-# Number from 1 to 10, representing the odds of a buddy has the maximum number of exchangers
-percentage_of_buddies_with_max_exchangers = 2
+import math
 
 
 class Matcher:
 
-    def __init__(self, file_names, exchanger_data, exchanger_preference, buddy_data, buddy_preference):
+    def __init__(self, file_names, exchanger_data, exchanger_preference, buddy_data, buddy_preference, matching_preference):
         self.file_names = file_names
         self.exchanger_data = exchanger_data
         self.buddy_data = buddy_data
         self.exchanger_preference = exchanger_preference
         self.buddy_preference = buddy_preference
+        self.matching_preference = matching_preference
+        if (len(self.exchanger_preference) < 5):
+            raise Exception(
+                "Please fill up compulsory fields for exchanger preference")
+        if (len(self.buddy_preference) < 5):
+            raise Exception(
+                "Please fill up compulsory fields for buddy preference")
 
     class Exchanger:
 
@@ -67,7 +70,7 @@ class Matcher:
 
     class Buddy:
 
-        def __init__(self, info, gender, match_gender, faculty, match_faculty, interest):
+        def __init__(self, info, gender, match_gender, faculty, match_faculty, interest, matching_preference):
             self.info = info
             self.faculty = faculty
             self.match_faculty = match_faculty
@@ -76,18 +79,21 @@ class Matcher:
             self.interest = interest
             self.odds = random.randint(0, 9)
             self.exchangers = []
+            self.max_num_of_exchangers_per_buddy = matching_preference[0]
+            self.percentage_of_buddies_with_max_exchangers = math.ceil(
+                matching_preference[1] / 10)
 
         # Check if the buddy has reached the limit of exchangers
         def is_full(self):
-            if self.odds < 10 - percentage_of_buddies_with_max_exchangers + 1:
-                if max_num_of_exchangers_per_buddy == 1:
+            if self.odds < 10 - self.percentage_of_buddies_with_max_exchangers:
+                if self.max_num_of_exchangers_per_buddy == 1:
                     return len(self.exchangers) > 0
-                elif max_num_of_exchangers_per_buddy == 2:
+                elif self.max_num_of_exchangers_per_buddy == 2:
                     return len(self.exchangers) > 1
                 else:
-                    return len(self.exchangers) > max_num_of_exchangers_per_buddy - 2
+                    return len(self.exchangers) > self.max_num_of_exchangers_per_buddy - 2
             else:
-                return len(self.exchangers) > max_num_of_exchangers_per_buddy - 1
+                return len(self.exchangers) > self.max_num_of_exchangers_per_buddy - 1
 
         def has_exchanger(self):
             return len(self.exchangers) > 0
@@ -115,43 +121,50 @@ class Matcher:
         for _, data in exchangers_data.iterrows():
             info = []
             exchanger_faculty, exchanger_match_faculty, exchanger_gender, exchanger_match_gender, exchanger_interest = self.exchanger_preference
-            faculty = data[exchanger_faculty].split(';')
-            match_faculty = data[exchanger_match_faculty] == 'Yes'
-            gender = data[exchanger_gender]
-            match_gender = data[exchanger_match_gender] == 'Yes'
-            interest = data[exchanger_interest].split(';')
-            for col in self.exchanger_data:
-                info.append(data[col])
+            try:
+                faculty = data[exchanger_faculty].split(';')
+                match_faculty = data[exchanger_match_faculty] == 'Yes'
+                gender = data[exchanger_gender]
+                match_gender = data[exchanger_match_gender] == 'Yes'
+                interest = data[exchanger_interest].split(';')
+                for col in self.exchanger_data:
+                    info.append(data[col])
+            except:
+                raise Exception(
+                    "Please ensure that the column names for the exchanger data are correct")
 
             exchanger = self.Exchanger(info, gender, match_gender,
                                        faculty[:-1], match_faculty, interest[:-1])
             exchangers.append(exchanger)
 
-        print("Number of exchangers: ", len(exchangers))
         # Same logic as above
         for _, data in buddies_data.iterrows():
             info = []
             buddy_faculty, buddy_match_faculty, buddy_gender, buddy_match_gender, buddy_interest = self.buddy_preference
-            faculty = data[buddy_faculty].split(';')
-            match_faculty = data[buddy_match_faculty] == 'Yes'
-            gender = data[buddy_gender]
-            match_gender = data[buddy_match_gender]
-            interest = data[buddy_interest].split(';')
-            for col in self.buddy_data:
-                info.append(data[col])
+            try:
+                faculty = data[buddy_faculty].split(';')
+                match_faculty = data[buddy_match_faculty] == 'Yes'
+                gender = data[buddy_gender]
+                match_gender = data[buddy_match_gender]
+                interest = data[buddy_interest].split(';')
+                for col in self.buddy_data:
+                    info.append(data[col])
+            except:
+                raise Exception(
+                    "Please ensure that the column names for the buddy data are correct")
             buddy = self.Buddy(info, gender, match_gender,
-                               faculty[:-1], match_faculty, interest[:-1])
+                               faculty[:-1], match_faculty, interest[:-1], self.matching_preference)
             buddies.append(buddy)
 
         # Check if there are enough buddies for the exchangers
-        if len(exchangers) > len(buddies) * max_num_of_exchangers_per_buddy:
+        if len(exchangers) > len(buddies) * self.matching_preference[0]:
             print("There are not enough buddies for the exchangers\n")
             print("Number of exchangers: ", len(exchangers))
             print("Number of buddies: ", len(buddies))
             print("Number of exchangers per buddy: ",
-                  max_num_of_exchangers_per_buddy)
+                  self.matching_preference[0])
             print("Ensure that the number of buddy * number of exchangers per buddy is greater than the number of exchangers")
-            exit()
+            raise Exception("There are not enough buddies for the exchangers")
 
         # Matching algorithm
         # The alogrithm greedily assigns exchanger to buddies with the highest matching score
