@@ -229,8 +229,8 @@ class Matcher:
 
         # Create the DataFrame from the results list
         matchings_data = pd.DataFrame(results, columns=self.buddy_data + [
-            buddy_faculty, buddy_match_faculty,
-            buddy_gender, buddy_match_gender, buddy_interest
+            buddy_gender, buddy_match_gender,
+            buddy_faculty, buddy_match_faculty, buddy_interest
         ] + self.exchanger_data + [
             exchanger_gender + ' ',
             exchanger_match_gender + ' ',
