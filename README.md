@@ -6,7 +6,7 @@ Ensure that you install the necessary coding language and libraries needed to ru
 
 First, ensure that python3 is installed on your computer. If you do not have python3, download it from [here](https://www.python.org/downloads/).
 
-Open up VSCode and open the Matching.py file.
+Open up VSCode and open the GUI.py file.
 
 If you do not have the _pandas_ library, run the command **pip install pandas** in the terminal.
 
