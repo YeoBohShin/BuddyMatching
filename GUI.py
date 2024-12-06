@@ -3,8 +3,8 @@ import os
 import sys
 from Matcher import Matcher
 
-# executable_dir = os.path.dirname(os.path.abspath(sys.executable))
-executable_dir = os.path.dirname(os.path.abspath(__file__))
+executable_dir = os.path.dirname(os.path.abspath(sys.executable))
+# executable_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(executable_dir, "data.txt")
 
 matching_preferences = []
@@ -211,6 +211,8 @@ def save():
         data_file.write("end!@#$%^&*()\n")
 
     for i in range(len(file_name_data)):
+        temp = "../../../"
+        file_name_data[i] = temp + file_name_data[i]
         file_name_data[i] = os.path.join(executable_dir, file_name_data[i])
 
     try:
