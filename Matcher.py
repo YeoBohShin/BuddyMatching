@@ -5,29 +5,40 @@ import math
 
 class Matcher:
 
-    def __init__(self, file_names, exchanger_data, exchanger_preference, buddy_data, buddy_preference, matching_preference):
+    def __init__(self, file_names, exchanger_data, exchanger_preference, buddy_data, buddy_preference, matching_preference, matching_points):
         self.file_names = file_names
         self.exchanger_data = exchanger_data
         self.buddy_data = buddy_data
         self.exchanger_preference = exchanger_preference
         self.buddy_preference = buddy_preference
         self.matching_preference = matching_preference
+        self.matching_points = matching_points
+        if (len(self.matching_points) < 3):
+            raise Exception(
+                "Please fill up compulsory fields for Matching Points")
+        if (len(self.file_names) < 3):
+            raise Exception(
+                "Please fill up compulsory fields for File Names")
+        if (len(self.matching_preference) < 2):
+            raise Exception(
+                "Please fill up compulsory fields for Matching Preference")
         if (len(self.exchanger_preference) < 5):
             raise Exception(
-                "Please fill up compulsory fields for exchanger preference")
+                "Please fill up compulsory fields for Exchanger Preference")
         if (len(self.buddy_preference) < 5):
             raise Exception(
-                "Please fill up compulsory fields for buddy preference")
+                "Please fill up compulsory fields for Buddy Preference")
 
     class Exchanger:
 
-        def __init__(self, info, gender, match_gender, faculty, match_faculty, interest):
+        def __init__(self, info, gender, match_gender, faculty, match_faculty, interest, match_points):
             self.info = info
             self.gender = gender
             self.match_gender = match_gender
             self.faculty = faculty
             self.match_faculty = match_faculty
             self.interest = interest
+            self.match_points = match_points
 
         # Adjust the scores accordingly to optimise the significance of each preference
         def matching_score(self, buddy):
@@ -35,15 +46,15 @@ class Matcher:
             # This ensures that buddies that already have an exchanger are less likely to be matched again
             # Ensuring fairness in distribution of exchangers to buddies
             if buddy.has_exchanger():
-                score -= 3
+                score -= math.ceil(self.match_points[0] / 2)
 
             # If either has a preference for gender, and it matches, add 1 to the score
             # Else we add 0.5 to the score, as it is easier to match with someone who does not have a preference
             if self.match_gender or buddy.match_gender:
                 if self.gender == buddy.gender:
-                    score += 1
+                    score += self.match_points[1]
             else:
-                score += 0.5
+                score += self.match_points[2] / 2
 
             # Same logic as above, but has a higher weightage of 5
             if self.match_faculty or buddy.match_faculty:
@@ -53,16 +64,16 @@ class Matcher:
                         matched = True
                         break
                 if matched:
-                    score += 5
+                    score += self.match_points[0]
                 else:
-                    score -= 5
+                    score -= self.match_points[0]
             else:
-                score += 0.5
+                score += self.match_points[0] / 5
 
             # For eacb similar interests, add 1 to the score
             for interest in self.interest:
                 if interest in buddy.interest:
-                    score += 1
+                    score += self.match_points[2]
 
             return score
 
@@ -134,7 +145,7 @@ class Matcher:
                     "Please ensure that the column names for the exchanger data are correct")
 
             exchanger = self.Exchanger(info, gender, match_gender,
-                                       faculty[:-1], match_faculty, interest[:-1])
+                                       faculty[:-1], match_faculty, interest[:-1], self.matching_points)
             exchangers.append(exchanger)
 
         # Same logic as above
