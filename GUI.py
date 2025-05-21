@@ -3,8 +3,10 @@ import os
 import sys
 from Matcher import Matcher
 
-executable_dir = os.path.dirname(sys.executable)  # For creating the executable
-# executable_dir = os.path.dirname(os.path.realpath(__file__)) # For testing locally
+executable_dir = os.path.dirname(os.path.abspath(
+    sys.executable))  # For creating the executable
+# executable_dir = os.path.dirname(
+#     os.path.realpath(__file__))  # For testing locally
 file_path = os.path.join(executable_dir, "data.txt")
 
 matching_points = []
@@ -206,19 +208,19 @@ def save():
             for entry in widget.winfo_children():
                 if isinstance(entry, tk.Entry):
                     if widget.winfo_children()[0].cget("text") == "Matching Points: " and entry.get() != "":
-                        matching_points.append(entry.get())
-                    if widget.winfo_children()[0].cget("text") == "Matching Preferences: " and entry.get() != "":
-                        matching_preferences.append(entry.get())
+                        matching_points.append(entry.get().strip())
+                    elif widget.winfo_children()[0].cget("text") == "Matching Preferences: " and entry.get() != "":
+                        matching_preferences.append(entry.get().strip())
                     elif widget.winfo_children()[0].cget("text") == "Input the Name of Files Below: " and entry.get() != "":
-                        file_name_data.append(entry.get())
+                        file_name_data.append(entry.get().strip())
                     elif widget.winfo_children()[0].cget("text") == "Input the Name of Columns from the Exchanger Excel File that You want in the Output File Below: " and entry.get() != "":
-                        exchanger_data.append(entry.get())
+                        exchanger_data.append(entry.get().strip())
                     elif widget.winfo_children()[0].cget("text") == "Input the Name of Corresponding Compulsory Columns from Exchangers Excel File Below: " and entry.get() != "":
-                        exchanger_preference.append(entry.get())
+                        exchanger_preference.append(entry.get().strip())
                     elif widget.winfo_children()[0].cget("text") == "Input the Name of Columns from the Buddy Excel File that You Want in the Output File Below: " and entry.get() != "":
-                        buddy_data.append(entry.get())
+                        buddy_data.append(entry.get().strip())
                     elif widget.winfo_children()[0].cget("text") == "Input the Name of Corresponding Compulsory Columns from Buddies Excel File Below: " and entry.get() != "":
-                        buddy_preference.append(entry.get())
+                        buddy_preference.append(entry.get().strip())
 
     with open(file_path, "w") as data_file:
         for entry in matching_points:
@@ -244,8 +246,8 @@ def save():
         data_file.write("end!@#$%^&*()\n")
 
     for i in range(len(file_name_data)):
-        temp = "../../../"  # For MacOS
-        # temp = ""  # For Windows
+        # temp = "../../../"  # For MacOS
+        temp = ""  # For Windows
         file_name_data[i] = temp + file_name_data[i]
         file_name_data[i] = os.path.join(executable_dir, file_name_data[i])
 
