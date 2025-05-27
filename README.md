@@ -38,10 +38,12 @@ The Matcher matches exchangers to buddies based on a greedy algorithm. The algor
 Once the application is opened, there are 7 sections to fill up.
 
 1. Matching Points
+
    This portion is to input the weightages of each label.
    Values inputed represents how much points is given for every matched label between an exchanger and a buddy
 
 2. Matching Preferences
+
    This portion is to input the distrubtion of exchangers among buddies
 
    1. Max Number of Exchanger per Buddy: How many exchangers a buddy can have at most at 1 time.
@@ -49,6 +51,7 @@ Once the application is opened, there are 7 sections to fill up.
       of buddies that are matched with the value inputed in the previous field. A higher percantage means more buddies are matched with max amount of exchangers, meaning there will be lesser buddies assigned overall.
 
 3. Input the Name of Files Below
+
    This portion is to input the names of the Excel files.
    Ensure that the format of the file is written in the name of the file. E.g If the file is saved as a csv file, the name inputed should be **file.csv** and not just **file**.
 
@@ -57,18 +60,22 @@ Once the application is opened, there are 7 sections to fill up.
    3. Matching Output Excel File Name: Name of the File that will be outputed if matching is successful
 
 4. Input the Name of Columns from the Exchanger Excel File that You want in the Output File Below
+
    This portion is to input the names of the columns of the excel into the output file
    For example, if you want the name of the exchanger to appear in the output excel file, input the name of the column that has the name of the exchangers in the exchanger excel file.
 
 5. Input the Name of Corresponding Compulsory Columns from Exchangers Excel File Below
+
    This portion is to input the compulsory fields needed for the algorithm.
 
    Copy over the respective name of the columns containing the value of each label.
 
 6. Input the Name of Columns from the Buddy Excel File that You Want in the Output File Below
+
    Similar to point 4 but for the buddies excel file.
 
 7. Input the Name of Corresponding Compulsory Columns from Buddies Excel File Below
+
    Similar to point 5 but for the buddies excel file.
 
 Before clicking on Match:
