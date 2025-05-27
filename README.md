@@ -44,7 +44,7 @@ Once the application is opened, there are 7 sections to fill up.
 
 2. Matching Preferences
 
-   This portion is to input the distrubtion of exchangers among buddies
+   This portion is to input the distrubtion of exchangers among buddies.
 
    1. Max Number of Exchanger per Buddy: How many exchangers a buddy can have at most at 1 time.
    2. Percentage of Buddies with Max Exchangers: Input a value between 0 and 100 to signify the proportion
@@ -61,7 +61,7 @@ Once the application is opened, there are 7 sections to fill up.
 
 4. Input the Name of Columns from the Exchanger Excel File that You want in the Output File Below
 
-   This portion is to input the names of the columns of the excel into the output file
+   This portion is to input the names of the columns of the excel into the output file.
    For example, if you want the name of the exchanger to appear in the output excel file, input the name of the column that has the name of the exchangers in the exchanger excel file.
 
 5. Input the Name of Corresponding Compulsory Columns from Exchangers Excel File Below
