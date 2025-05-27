@@ -3,10 +3,10 @@ import os
 import sys
 from Matcher import Matcher
 
-executable_dir = os.path.dirname(os.path.abspath(
-    sys.executable))  # For creating the executable
-# executable_dir = os.path.dirname(
-#     os.path.realpath(__file__))  # For testing locally
+# executable_dir = os.path.dirname(os.path.abspath(
+#     sys.executable))  # For creating the executable
+executable_dir = os.path.dirname(
+    os.path.realpath(__file__))  # For testing locally
 file_path = os.path.join(executable_dir, "data.txt")
 
 matching_points = []

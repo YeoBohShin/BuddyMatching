@@ -1,37 +1,80 @@
 Simple code to match NUS buddies with Exchangers
 
-Download the Matcher from the releases. Ensure that you download the correct Matcher for your specific computer, look at the tag for the respective Operating system.
+Download the Matcher from the releases (MacOS is currently not working). Ensure that you download the correct Matcher for your specific computer, look at the tag for the respective Operating system.
 
 Before trying to match, it is advise to perform preprocessing on the excel for optimal results.
 Some possible data pre-processing:
 
 1. Remove duplicate buddies/exchangers
-2. Sort those with the preference of same gender or same faculty to appear first in the excel file. The one with the higher weightage should be sorted last.
-   (Eg. if faculty is more important than gender, sort gender first then faculty.)
+2. Sort those with the preference of same gender or same faculty to appear first in the excel file. The one
+   with the higher weightage should be sorted last.
+   (Eg. if faculty is more important than gender, sort gender first then faculty.
+   Result of this should list exchangers in the following order:
+   faculty yes gender yes
+   faculty yes gender no
+   faculty no gender yes
+   faculty no gender no)
 
-Opening the Matcher will open a new window, which will be the matcher.
+Opening the Matcher will open a new window, which will be the matcher. (Might take awhile to open)
+
+This section only applies if you have downloaded the application from Github
 
 Note for MacOS users, to open the matcher normally, you first have to navigate into the package.
 
-1. Left click and show package content
-2. Go to Contents then MacOS
-3. Run the executable
+1.  Left click and show package content
+2.  Go to Contents then MacOS
+3.  Run the executable
 
 You should see that a data.txt file is create, from there you can open the matcher normally.
 
-Input the necessary data as needed.
+The Matcher matches exchangers to buddies based on a greedy algorithm. The algorithm works by comparing an exchanger's preferences and interest with every buddy available. The buddy with the most matched preferences and interests is matched with the exchanger. The algorithm ensures that every exchanger will have a buddy. However, buddies are not guaranteed to have an exchanger matched to them.
+
+**Note that the algorithm does not account for any additional comments provided by exchangers/buddies, thus manual swapping is still required.**
+
+Once the application is opened, there are 7 sections to fill up.
+
+1. Matching Points
+   This portion is to input the weightages of each label.
+   Values inputed represents how much points is given for every matched label between an exchanger and a buddy
+
+2. Matching Preferences
+   This portion is to input the distrubtion of exchangers among buddies
+
+   1. Max Number of Exchanger per Buddy: How many exchangers a buddy can have at most at 1 time.
+   2. Percentage of Buddies with Max Exchangers: Input a value between 0 and 100 to signify the proportion
+      of buddies that are matched with the value inputed in the previous field. A higher percantage means more buddies are matched with max amount of exchangers, meaning there will be lesser buddies assigned overall.
+
+3. Input the Name of Files Below
+   This portion is to input the names of the Excel files.
+   Ensure that the format of the file is written in the name of the file. E.g If the file is saved as a csv file, the name inputed should be **file.csv** and not just **file**.
+
+   1. Exchanger Excel File Name: Name of the Excel file containing information of the exchangers
+   2. Buddy Excel File Name: Name of the Excel file containing information of the buddies
+   3. Matching Output Excel File Name: Name of the File that will be outputed if matching is successful
+
+4. Input the Name of Columns from the Exchanger Excel File that You want in the Output File Below
+   This portion is to input the names of the columns of the excel into the output file
+   For example, if you want the name of the exchanger to appear in the output excel file, input the name of the column that has the name of the exchangers in the exchanger excel file.
+
+5. Input the Name of Corresponding Compulsory Columns from Exchangers Excel File Below
+   This portion is to input the compulsory fields needed for the algorithm.
+
+   Copy over the respective name of the columns containing the value of each label.
+
+6. Input the Name of Columns from the Buddy Excel File that You Want in the Output File Below
+   Similar to point 4 but for the buddies excel file.
+
+7. Input the Name of Corresponding Compulsory Columns from Buddies Excel File Below
+   Similar to point 5 but for the buddies excel file.
 
 Before clicking on Match:
 
-1. Ensure that both, exchanger and buddies, excel files are stored in the same directory as the matcher file
+1. Ensure that both, exchanger and buddies, excel files are stored in the same directory as the matcher  
+   application
 2. Ensure that both, exchanger and buddies, excel files are saved as .csv format for the matcher to work.
 
-Running the code will generate the matched excel file into the same directory as the matcher file.
+Running the code will generate the matched excel file into the same directory as the matcher application.
 
 Ensure that the matching excel file is closed before running the code if you want to generate new matchings.
-
-The code ensures that every exchanger will have a buddy. Buddies are not guaranteed to have an exchanger matched to them.
-
-Note that the algorithm does not account for any additional comments provided by exchangers/buddies, thus manual swapping is still required.
 
 If there are any questions, contact me on Telegram at @bohshin.
