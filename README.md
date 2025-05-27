@@ -1,5 +1,7 @@
 Simple code to match NUS buddies with Exchangers
 
+### Set-up
+
 Download the Matcher from the releases (MacOS is currently not working). Ensure that you download the correct Matcher for your specific computer, look at the tag for the respective Operating system.
 
 Before trying to match, it is advise to perform preprocessing on the excel for optimal results.
@@ -26,6 +28,8 @@ Note for MacOS users, to open the matcher normally, you first have to navigate i
 3.  Run the executable
 
 You should see that a data.txt file is create, from there you can open the matcher normally.
+
+### Application
 
 The Matcher matches exchangers to buddies based on a greedy algorithm. The algorithm works by comparing an exchanger's preferences and interest with every buddy available. The buddy with the most matched preferences and interests is matched with the exchanger. The algorithm ensures that every exchanger will have a buddy. However, buddies are not guaranteed to have an exchanger matched to them.
 
