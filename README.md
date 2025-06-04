@@ -18,7 +18,8 @@ Some possible data pre-processing:
 
 2. Sort those with the preference of same gender or same faculty to appear first in the excel file. The one
    with the higher weightage should be sorted last.
-   (Eg. if faculty is more important than gender, sort gender first then faculty.
+
+   Eg. if faculty is more important than gender, sort gender first then faculty.
 
    Result of this should list exchangers in the following order:
 
@@ -28,7 +29,7 @@ Some possible data pre-processing:
 
    faculty no gender yes
 
-   faculty no gender no)
+   faculty no gender no
 
 The Matcher will open in a new window. (Might take a while to open)
 
