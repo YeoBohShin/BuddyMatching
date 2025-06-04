@@ -35,13 +35,11 @@ The Matcher will open in a new window. (Might take a while to open)
 
 This section only applies if you have downloaded the application from GitHub
 
-Note for MacOS users, to open the Matcher normally, you first must navigate into the package.
+Note for MacOS users, you must navigate into the package to run the Matcher.
 
 1.  Left click and show package content
-2.  Go to Contents then MacOS
+2.  Go to Contents and then MacOS
 3.  Run the executable
-
-You should see that a data.txt file is created, from there you can open the Matcher normally.
 
 ### Application
 
