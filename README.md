@@ -33,13 +33,15 @@ Some possible data pre-processing:
 
 The Matcher will open in a new window. (Might take a while to open)
 
-This section only applies if you have downloaded the application from GitHub
-
 Note for MacOS users, you must navigate into the package to run the Matcher.
 
 1.  Left click and show package content
 2.  Go to Contents and then MacOS
 3.  Run the executable
+
+MacOS will prompt to allow permission to open the application. Go to Settings > Privacy & Security. Then scroll down till you see a button telling to "Open Anyway" and click it.
+
+[(./help.jpg)]
 
 ### Application
 
