@@ -41,7 +41,7 @@ Note for MacOS users, you must navigate into the package to run the Matcher.
 
 MacOS will prompt to allow permission to open the application. Go to Settings > Privacy & Security. Then scroll down till you see a button telling to "Open Anyway" and click it.
 
-![(./help.jpg)]
+![image](./help.jpg)
 
 ### Application
 
