@@ -118,9 +118,19 @@ class Matcher:
     def match(self):
         matchings = []
 
+        exchangers_data = None
+        buddies_data = None
+
         # Ensure that the name of the CSV files are correct
-        exchangers_data = pd.read_csv(self.file_names[0])
-        buddies_data = pd.read_csv(self.file_names[1])
+        try:
+            exchangers_data = pd.read_csv(self.file_names[0], encoding='utf-8')
+        except UnicodeDecodeError:
+            exchangers_data = pd.read_csv(
+                self.file_names[0], encoding='cp1252')
+        try:
+            buddies_data = pd.read_csv(self.file_names[1], encoding='utf-8')
+        except UnicodeDecodeError:
+            buddies_data = pd.read_csv(self.file_names[1], encoding='cp1252')
 
         exchangers = []
         buddies = []
