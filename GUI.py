@@ -3,10 +3,10 @@ import os
 import sys
 from Matcher import Matcher
 
-executable_dir = os.path.dirname(os.path.abspath(
-    sys.executable))  # For creating the executable
-# executable_dir = os.path.dirname(
-#     os.path.realpath(__file__))  # For testing locally
+# executable_dir = os.path.dirname(os.path.abspath(
+#     sys.executable))  # For creating the executable
+executable_dir = os.path.dirname(
+    os.path.realpath(__file__))  # For testing locally
 file_path = os.path.join(executable_dir, "data.txt")
 
 matching_points = []
@@ -246,8 +246,8 @@ def save():
         data_file.write("end!@#$%^&*()\n")
 
     for i in range(len(file_name_data)):
-        temp = "../../../"  # For MacOS
-        # temp = ""  # For Windows
+        # temp = "../../../"  # For MacOS
+        temp = ""  # For Windows
         file_name_data[i] = temp + file_name_data[i]
         file_name_data[i] = os.path.join(executable_dir, file_name_data[i])
 

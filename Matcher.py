@@ -1,6 +1,6 @@
-import pandas as pd
 import random
 import math
+import pandas as pd
 
 
 class Matcher:
@@ -123,15 +123,17 @@ class Matcher:
 
         # Ensure that the name of the CSV files are correct
         try:
-            exchangers_data = pd.read_csv(self.file_names[0], encoding='utf-8')
+            exchangers_data = pd.read_csv(
+                self.file_names[0], encoding='utf-8', encoding_errors='replace')
         except UnicodeDecodeError:
             exchangers_data = pd.read_csv(
-                self.file_names[0], encoding='cp1252')
+                self.file_names[0], encoding='cp1252', encoding_errors='replace')
         try:
-            buddies_data = pd.read_csv(self.file_names[1], encoding='utf-8')
+            buddies_data = pd.read_csv(
+                self.file_names[1], encoding='utf-8', encoding_errors='replace')
         except UnicodeDecodeError:
-            buddies_data = pd.read_csv(self.file_names[1], encoding='cp1252')
-
+            buddies_data = pd.read_csv(
+                self.file_names[1], encoding='cp1252', encoding_errors='replace')
         exchangers = []
         buddies = []
 
@@ -166,11 +168,12 @@ class Matcher:
                 faculty = data[buddy_faculty].split(';')
                 match_faculty = data[buddy_match_faculty] == 'Yes'
                 gender = data[buddy_gender]
-                match_gender = data[buddy_match_gender]
+                match_gender = data[buddy_match_gender] == 'Yes'
                 interest = data[buddy_interest].split(';')
                 for col in self.buddy_data:
                     info.append(data[col])
             except:
+                print(data)
                 raise Exception(
                     "Please ensure that the column names for the buddy data are correct")
             buddy = self.Buddy(info, gender, match_gender,
